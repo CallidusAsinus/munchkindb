@@ -24,3 +24,4 @@ web/runner.json
 web/corp.json
 /nbproject/
 .web-server-pid
+cards-json/

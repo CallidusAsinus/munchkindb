@@ -6,12 +6,14 @@ The data used by MunchkinDB is at https://github.com/CallidusAsinus/munchkin-car
 
 # Installing a local copy of MunchkinDB
 
-## Prerequisite
+## Installing on your host
+
+### Prerequisite
 
 - you need a recent apache/php/mysql stack
 - your php module must be configured with `mbstring.internal_encoding = UTF-8`
 
-## How to install
+### How to install
 
 - Go into the directory where your server will reside
 - Clone the repository (or your own fork)
@@ -26,6 +28,25 @@ The data used by MunchkinDB is at https://github.com/CallidusAsinus/munchkin-car
 - Import all the data from the data repository: `php app/console nrdb:import:std path_to_json_repository`
 - [Configure your web server with the correct DocumentRoot](http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html). Alternatively, [use PHP's built-in Web Server](http://symfony.com/doc/current/cookbook/web_server/built_in.html). Set your DocumentRoot to `munchkindb/web`
 - Point your browser to `/app_dev.php`
+
+## Or using Docker
+
+### Prerequisite
+
+-  You need to have Docker installed
+
+### Installing
+
+If you have Unix based OS, you can use scripts provided inside the `docker` directory. Go to this directory and type:
+
+- `./build.sh` - builds the docker image called `munchkin-server`
+- `./run.sh` - starts 3 containers linked together:
+  - `mdb-db` - mysql database container
+  - `mdb-admin` - phpmyadmin instance on port 3872 (get it?)
+  - `mdb-server` - container with apache and PHP, prebuild with composer's dependencies, running on port 3011
+- `./init.sh` - initializes database
+
+Logs are available via `docker logs mdb-server`.
 
 ## How to add card images
 
@@ -44,7 +65,7 @@ When you update your repository (`git pull`), run the following commands:
 
 To update the deck of the week on the front page:
 
-- `php app/console nrdb:highlight decklist_id` 
+- `php app/console nrdb:highlight decklist_id`
 
 where `decklist_id` is the numeric id of the deck you want to highlight.
 
